@@ -1,0 +1,424 @@
+/* --- GLOBAL STYLES --- */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+
+canvas {
+    display: block;
+}
+
+/* --- GAME TITLE --- */
+.title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+    color: #ffd700; 
+    z-index: 100;
+    padding: 10px 20px; 
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.5); 
+    border: 2px solid #ffd700;
+    width: auto;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* --- SCORE BOARD --- */
+#scoreBoard {
+    position: absolute;
+    top: 25px;
+    right: 90px; 
+    font-size: 20px; 
+    color: #ffd700; 
+    z-index: 100;
+    padding: 10px 20px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.5); 
+    border: 2px solid #ffd700;
+    width: auto;
+    min-width: 150px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+/* Game Over Score Styling */
+.final-score-style {
+    font-size: 42px;
+    font-weight: 900;
+    color: #000000 !important; /* Bold Black */
+    background: #ffd700; /* Gold Background */
+    display: inline-block;
+    padding: 10px 45px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+    margin: 25px 0;
+    font-family: 'Orbitron', sans-serif;
+    border: 3px solid #000;
+}
+/* --- NITRO BAR --- */
+#nitroWrapper {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    border-radius: 25px;
+    overflow: hidden;
+    z-index: 5;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+}
+
+#nitroBar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff00cc, #3333ff, #00d2ff, #ff00cc);
+    background-size: 300% 100%;
+    animation: hyperShine 1.5s linear inite;
+    box-shadow: 0 0 25px #00f2ff;
+    transition: width 0.1s ease-out;
+}
+
+@keyframes hyperShine {
+    0% { background-position: 0% 0; }
+    100% { background-position: 300% 0; }
+}
+
+/* --- FUEL BAR SYSTEM --- */
+#fuelContainer {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 350px;
+    height: 25px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 3px solid #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+    z-index: 100;
+}
+
+#fuelBar {
+    width: 100%;
+    height: 100%;
+    background: #ffcc00;
+    border-radius: 12px;
+    transition: width 0.1s linear;
+}
+
+#fuelContainer .fuel-label {
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-weight: 900;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- SETTINGS ICON --- */
+#settingsIcon {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+    z-index: 9999 !important; 
+    font-size: 35px;
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+}
+
+#settingsIcon:hover {
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* --- SETTINGS MENU (FIXED CENTERED) --- */
+#settingsMenu {
+    display: none; /* JS moolama 'flex' aagum */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    backdrop-filter: blur(10px);
+    z-index: 10000 !important;
+    
+    /* Center alignment using Flexbox */
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.settings-box {
+    background: #1a1a1a !important;
+    padding: 40px !important;
+    border-radius: 25px !important;
+    border: 3px solid #ffd700 !important;
+    width: 320px !important;
+    text-align: center !important;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.3) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+    position: relative !important;
+}
+
+/* Settings inner elements */
+#musicToggle, #showControls, #closeSettings {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Segoe UI', sans-serif;
+    transition: 0.3s;
+}
+
+#musicToggle { background: #ffd700; color: black; border: none; }
+#showControls { background: transparent; color: white; border: 1px solid #555; }
+#closeSettings { background: #ff4444; color: white; border: none; margin-top: 10px; }
+
+#closeSettings:hover { background: #ff0000; transform: scale(1.05); }
+
+/* --- START SCREEN --- */
+#startScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #222 0%, #000 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
+    color: white;
+}
+
+.game-logo {
+    font-size: 80px;
+    font-weight: 900;
+    color: #eb5dee; /* Unga favourite Pink/Purple shade */
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    
+    /* 1. Black Border (Stroke) */
+    -webkit-text-stroke: 2px #000; 
+
+    /* 2. Layered Shadow for Unique Look */
+    /* Idhu black border-ah innum thick-ah kaatum, koodave neon glow-um kudukkum */
+    text-shadow: 
+        4px 4px 0px #000, 
+        -1px -1px 0px #000,  
+        1px -1px 0px #000,
+        -1px 1px 0px #000,
+        1px 1px 0px #000,
+        0 0 25px rgba(251, 16, 255, 0.6); /* Neon Glow matching your color */
+
+    margin-bottom: 15px;
+    letter-spacing: 5px; /* Letters kulla chinna gap - idhu premium look kudukkum */
+    
+    /* 3. Subtle Pulse Animation (Optional - Logo light-ah minnum) */
+    animation: logoGlow 2s ease-in-out infinite alternate;
+}
+.start-hints {
+    margin-top:45px;
+    font-size: 10px;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    
+    /* Unga name-ku oru subtle neon glow */
+    text-shadow: 0 0 10px rgba(235, 93, 238, 0.8);
+    
+    /* Animation ippo innum smooth-ah irukkum */
+    animation: developerGlow 3s infinite alternate;
+}
+
+@keyframes developerGlow {
+    from { opacity: 0.5; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes logoGlow {
+    from {
+        filter: drop-shadow(0 0 5px rgba(235, 93, 238, 0.2));
+    }
+    to {
+        filter: drop-shadow(0 0 20px rgba(235, 93, 238, 0.8));
+    }
+}
+
+#startBtn {
+    padding: 15px 50px;
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    background: #ffcc00;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+    margin-top: 30px;
+}
+
+#startBtn:hover { transform: scale(1.1); background: #fff; }
+
+.start-hints { margin-top: 40px; font-size: 14px; color: #888; }
+
+/* --- COUNTDOWN OVERLAY --- */
+#countdownOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+#countdownText {
+    font-size: 150px;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 20px 80px;
+    border-radius: 30px;
+    border: 5px solid #ffd700;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- GAME OVER SCREEN --- */
+#gameOverScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(60,0,0,1) 0%, rgba(0,0,0,1) 100%);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10002;
+    backdrop-filter: blur(10px);
+}
+
+#gameOverScreen h1 {
+    font-size: 100px;
+    color:red;
+    border:#000;
+    text-shadow: 0 0 30px #f80b0b;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+#restartBtn {
+    padding: 20px 70px;
+    font-size: 32px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #000;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#restartBtn:hover { background: #ff4444; color: white; transform: scale(1.1); }
+
+/* --- CONTROLS POPUP --- */
+#controlsPopup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 320px;
+    background: #111;
+    border: 2px solid #eb5dee;;
+    padding: 25px;
+    color: white;
+    z-index: 10005;
+    border-radius: 15px;
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+    text-align: center;
+}
+
+/* --- MOBILE ADJUSTMENTS --- */
+@media(max-width: 768px) {
+    #scoreBoard { font-size: 18px; right: 70px; }
+    .game-logo { font-size: 50px; }
+    #countdownText { font-size: 100px; padding: 15px 50px; }
+    #gameOverScreen h1 { font-size: 60px; }
+}
+#resumeOverlay {
+    display: none; 
+    position: fixed; /* 'absolute'-ku badhila 'fixed' pōttunga */
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh; 
+    background: rgba(0, 0, 0, 0.85); /* Black background with opacity */
+    z-index: 99999; /* Ellathukkum mela irukkanum */
+    
+    /* Center-la vara idhu dhaan mukkiyam */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+/* Resume button-ku extra stylish margin */
+.resume-btn {
+    margin-top: 20px;
+    /* Neenga munnadi pōtta mitha neon styles inga irukkum... */
+}
+.resume-btn {
+    background: #eb5dee;;
+    color: #000;
+    border: none;
+    padding: 15px 45px;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    box-shadow: 0 0 15px#eb5dee, 0 0 30px#eb5dee;;
+    transition: all 0.3s ease;
+}
+
+.resume-btn:hover {
+    background: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px #fff, 0 0 40px #eb5dee;;
+}

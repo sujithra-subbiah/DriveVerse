@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DriveVerse - Next Gen Racing</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <audio id="raceStartSound" src="sounds/racestartsound.mp3" preload="auto"></audio>
+    <div id="countdownOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:10000; backdrop-filter: blur(5px);">
+        <h1 id="countdownText" style="font-family: 'Orbitron', sans-serif;"></h1>
+    </div>
+
+    <div id="startScreen" style="z-index: 5000;">
+        <h1 class="game-logo">DRIVEVERSE</h1>
+        <p>Ultimate Next-Gen Racing - Best played on Desktop/Laptop</p>
+        <button id="startBtn">START ENGINE</button>
+<div class="start-hints">
+    <p style="font-weight: bold; letter-spacing: 3px; color: #eb5dee;">
+        Developed by S.Sujithra
+    </p>
+</div>
+    </div>
+
+    <h1 class="title">DriveVerse</h1>
+
+    <div id="scoreBoard">
+        SCORE: 0 | LEVEL: 1
+        <span>BEST: <span id="highScoreHUD">0</span></span>
+    </div>
+
+    <div id="nitroWrapper">
+        <div id="nitroBar"></div>
+        <div class="nitro-text">Nitro Boost</div>
+    </div>
+        
+    <div id="fuelContainer">
+        <div id="fuelBar"></div>
+        <span class="fuel-label">PETROL</span>
+    </div>
+
+    <div id="settingsIcon" style="position: fixed; top: 15px; right: 10px; cursor: pointer; z-index: 6000; font-size: 45px;">⚙️</div>
+
+<div id="settingsMenu">
+    <div class="settings-box">
+        <h2 style="color: #ffd700; font-family: 'Orbitron';">SETTINGS</h2>
+        
+        <div>
+            <p style="color: #aaa; font-size: 12px;">MUSIC</p>
+            <button id="musicToggle" style="padding: 10px 30px; background: #ffd700; border: none; font-weight: bold; border-radius: 8px; cursor: pointer;">ON</button>
+        </div>
+
+        <div>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.6" style="width: 100%; accent-color: #ffd700;">
+        </div>
+
+        <button id="showControls" style="padding: 12px; background: transparent; color: white; border: 1px solid #555; border-radius: 8px; cursor: pointer;">HOW TO PLAY</button>
+        
+        <button id="closeSettings" style="background: #ff0000; color: white; border: none; padding: 12px 40px; border-radius: 50px; cursor: pointer; font-weight: bold;">CLOSE</button>
+    </div>
+</div>
+<div id="resumeOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); flex-direction: column; align-items: center; justify-content: center; z-index: 10000; font-family: 'Orbitron';">
+    <h1 style="color: white; letter-spacing: 5px; text-shadow: 0 0 10px #fff; margin-bottom: 20px;">GAME PAUSED</h1>
+    
+    <button id="resumeBtn" class="resume-btn">RESUME GAME</button>
+</div>
+<div id="controlsPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 350px; background: rgba(15, 15, 15, 0.98); border: 2px solid #eb5dee; padding: 30px; color: white; z-index: 10005; border-radius: 20px; box-shadow: 0 0 40px rgba(0, 212, 255, 0.4); text-align: center; font-family: 'Orbitron', sans-serif;">
+    
+    <h3 style="color: #eb5dee; margin-bottom: 20px; letter-spacing: 2px;">CONTROLS</h3>
+    
+    <div style="text-align: left; line-height: 1.8; font-size: 14px;">
+        <p><strong>⬆️  :</strong> ACCELERATE</p>
+        <p><strong>⬇️  :</strong> BRAKE  /  REVERSE</p>
+        <p><strong>⬅️ ➡️  :</strong> STEER LEFT  /  RIGHT</p>
+        <hr style="border: 0.5px solid #333; margin: 15px 0;">
+        <p><span style="background: #ffd700; color: black; padding: 2px 8px; border-radius: 4px; font-weight: bold;">SHIFT</span> : NITRO BOOST 🚀</p>        
+        <p><strong>N KEY :</strong>🌃  :Building Lights</p>
+         <p><strong>Space KEY :</strong>▶️  :To Resume</p>
+    </div>
+
+<button id="closeControls" style="margin-top: 25px; width: 100%; padding: 12px; background: #eb5dee; color: black; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-family: 'Orbitron';">GOT IT!</button></div>
+    <div id="controlsHint" class="instruction-box">
+        <h3>DRIVE START</h3>
+        <p>Press <b>ARROW KEYS</b> to start racing!</p>
+    </div>
+
+    <div id="gameOverScreen">
+        <h1>WASTED!</h1>
+        <p id="finalScore" class="final-score-style">Final Score : 0</p>
+        <button id="restartBtn">RETRY</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r128/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        // Start Interaction & Hint Removal
+        window.addEventListener('keydown', (e) => {
+            if(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+                const hint = document.getElementById('controlsHint');
+                if(hint) {
+                    hint.style.opacity = '0';
+                    setTimeout(() => { if(hint) hint.remove(); }, 1000); 
+                }
+            }
+        });
+    </script>
+</body>
+</html>
